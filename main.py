@@ -224,11 +224,10 @@ def dead():
         startButton = pygame.draw.rect(tela, branco, (10,10, larguraButtonStart, alturaButtonStart), border_radius=15)
         startTexto = fonteMenu.render("Iniciar Game", True, preto)
         tela.blit(startTexto, (25,12))
-        
-
-
         textoBest = fonteMenu.render(f"The Best: {nome_maior} - {maior_pontos} pts - {dataJogada} {horaJogada}", True, branco)
         tela.blit(textoBest, (10, 160)) 
+
+        
         pygame.display.update()
         relogio.tick(60)
 
