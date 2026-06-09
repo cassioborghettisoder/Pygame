@@ -60,11 +60,11 @@ def jogar():
     fundoMov2 = 1129
     posicaoXPersona = 0
     posicaoYPersona = 60
-    movimentoXPersona = 0   # ← confirme que existe
+    movimentoXPersona = 0   
     movimentoYPersona = 0
-    velocidadeMovPersona = 5
-    posicaoXMissel = 800
-    posicaoYMissel = 100
+    velocidadeMovPersona = 3
+    posicaoXMissel = 1000
+    posicaoYMissel = random.randint(0,675)
     velocidadeMissel = 2
     pontos = 0
     pausado = False
@@ -111,25 +111,24 @@ def jogar():
             relogio.tick(60)
             continue    
     
-        posicaoXPersona = posicaoXPersona + movimentoXPersona          
-        posicaoYPersona = posicaoYPersona + movimentoYPersona            
+          
         if posicaoXPersona < 0 :
             posicaoXPersona = 0
-        elif posicaoXPersona > 685:
-            posicaoXPersona = 685
+        elif posicaoXPersona > 884:
+            posicaoXPersona = 884
         if posicaoYPersona < 0 :
             posicaoYPersona = 0
-        elif posicaoYPersona > 150:
-            posicaoYPersona = 150
+        elif posicaoYPersona > 649:
+            posicaoYPersona = 649
             
             
         posicaoXMissel = posicaoXMissel - velocidadeMissel
         if posicaoXMissel < -125:
             pygame.mixer.Sound.play(missileSound)
-            posicaoXMissel = 800
+            posicaoXMissel = 1000
             pontos = pontos + 1
             velocidadeMissel = velocidadeMissel + 1
-            posicaoYMissel = random.randint(0,200)
+            posicaoYMissel = random.randint(0,675)
                             
         tela.fill(branco)
         tela.blit(fundo, (fundoMov1,0) )
@@ -169,9 +168,9 @@ def jogar():
         decoY += decoVelY
 
   
-        if decoX <= 0 or decoX >= 780:
+        if decoX <= 0 or decoX >= 995:
             decoVelX = -decoVelX
-        if decoY <= 0 or decoY >= 180:
+        if decoY <= 0 or decoY >= 695:
             decoVelY = -decoVelY
 
         raioSol += 0.05 * pulsando
@@ -198,6 +197,7 @@ def dead():
     alturaButtonStart  = 40
     larguraButtonQuit = 150
     alturaButtonQuit  = 40
+    startButton = pygame.Rect(10, 10, 150, 40)
     while True:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
@@ -207,7 +207,8 @@ def dead():
                     larguraButtonStart = 140
                     alturaButtonStart  = 35
 
-
+            elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
+                quit()
                 
             elif evento.type == pygame.MOUSEBUTTONUP:
                 # Verifica se o clique foi dentro do retângulo
@@ -226,7 +227,8 @@ def dead():
         
 
 
-
+        textoBest = fonteMenu.render(f"The Best: {nome_maior} - {maior_pontos} pts - {dataJogada} {horaJogada}", True, branco)
+        tela.blit(textoBest, (10, 160)) 
         pygame.display.update()
         relogio.tick(60)
 
@@ -237,6 +239,8 @@ def start():
     while True:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
+                quit()
+            elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
                 quit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if startButton.collidepoint(evento.pos):
